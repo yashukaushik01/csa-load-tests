@@ -3,11 +3,8 @@
       "example_scenario": {
         "executor": "shared-iterations",
         "iterations": 1,
-        "gracefulStop": "30s",
-        "timeUnit": "1s",
-        "duration": "1s",
-        "preAllocatedVUs": 1,
-        "maxVUs": 1500
+        "maxDuration": "1s",
+        "vus": 1
       }
     },
     "csa": {

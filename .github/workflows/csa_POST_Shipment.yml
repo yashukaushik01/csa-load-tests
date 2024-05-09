@@ -63,10 +63,8 @@ jobs:
                   \"example_scenario\": {
                     \"executor\": \"shared-iterations\",
                     \"iterations\": ${{ inputs.iterations }},
-                    \"timeUnit\": \"${{ inputs.durationSeconds }}\",
-                    \"duration\": \"${{ inputs.durationSeconds }}\",
-                    \"preAllocatedVUs\": \"${{ inputs.vUs }}\",
-                    \"maxVUs\": \"${{ inputs.vUs }}\"
+                    \"maxDuration\": \"${{ inputs.durationSeconds }}\",
+                    \"vus\": \"${{ inputs.vUs }}\",
                   }
                 },
                 \"csa\": {
