@@ -15,7 +15,7 @@ const errorStatus500Counter = new Counter('errors_Status_code_500');
 const result_file_path = "../csa_post_shipment_transactionId_result_file.txt";
 
 // Get Config
-const config = JSON.parse(open("../config.json")).phv3;
+const config = JSON.parse(open("../config.json")).csa;
 
 // Prepare request data 
 const shipmentRequest = {

@@ -2,11 +2,17 @@ on:
   workflow_dispatch:
     inputs:
       baseURL:
-        description: 'The base url of PHv3 API'
+        description: 'The base url of CSA API'
         type: choice
         options:
         - "https://api-qa.kloudship.com:96/api/v1/"
         - "https://api.kloudship.com:96/api/v1/"
+      shipmentMode:
+        description: 'Mode of shipment'
+        type: choice
+        options:
+        - "Test"
+        - "Live"
       iterations:
         description: 'The number of requests (iterations) to be executed (required field for execution type iterations)'
         default: '1'
@@ -36,14 +42,6 @@ on:
           default: ""
           type: string
           required: false
-      shipmentMode:
-          description: 'Mode of shipment'
-          default: 'Live'
-          type: string
-          required: true
-          options:
-          - "Test"
-          - "Live"
         
 jobs:
   k6_forward_label:
@@ -87,4 +85,4 @@ jobs:
         run: xk6 build --with github.com/szkiba/xk6-dotenv@latest --with github.com/avitalique/xk6-file@latest --replace go.buf.build/grpc/go/prometheus/prometheus=buf.build/gen/go/prometheus/prometheus/protocolbuffers/go@latest --replace go.buf.build/grpc/go/gogo/protobuf=buf.build/gen/go/gogo/protobuf/protocolbuffers/go@latest
 
       - name: Run k6 forward label test
-        run: ./k6 run --config config.json load_tests_scripts/as_uswest_qa_phv3_post_shipment.js
+        run: ./k6 run --config config.json load_tests_scripts/csa_post_shipment.js
