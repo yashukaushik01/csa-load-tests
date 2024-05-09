@@ -13,6 +13,11 @@ on:
         options:
         - "Test"
         - "Live"
+      carrierAccountId:
+        description: 'The number of requests (iterations) to be executed (required field for execution type iterations)'
+        default: ""
+        type: string
+        required: true
       iterations:
         description: 'The number of requests (iterations) to be executed (required field for execution type iterations)'
         default: '1'
@@ -32,11 +37,6 @@ on:
         description: 'The CSA API Token to use'
         type: string
         required: true
-      carrierAccountId:
-        description: 'The number of requests (iterations) to be executed (required field for execution type iterations)'
-        default: ""
-        type: string
-        required: false
       locationId:
         description: 'The CSA location id of pickup location'
         default: ""
