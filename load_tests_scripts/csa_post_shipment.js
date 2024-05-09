@@ -2,7 +2,7 @@ import { group, check } from "k6";
 import http from "k6/http";
 import { randomString } from "https://jslib.k6.io/k6-utils/1.2.0/index.js";
 import { Counter } from "k6/metrics";
-import file from 'k6/x/file';
+// import file from 'k6/x/file';
 
 // Result Counters
 // const failed_data_file_path = 'failed_csa_shipment_results.txt';
