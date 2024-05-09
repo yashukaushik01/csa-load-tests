@@ -5,14 +5,14 @@ import { Counter } from "k6/metrics";
 import file from 'k6/x/file';
 
 // Result Counters
-const failed_data_file_path = 'failed_csa_shipment_results.txt';
+// const failed_data_file_path = 'failed_csa_shipment_results.txt';
 const successStatus200Counter = new Counter('success_Status_code_200');
 const errorStatus400Counter = new Counter('errors_Status_code_400');
 const errorStatus422Counter = new Counter('errors_Status_code_422');
 const errorStatus500Counter = new Counter('errors_Status_code_500');
 
 // Result File
-const result_file_path = "../csa_post_shipment_transactionId_result_file.txt";
+// const result_file_path = "../csa_post_shipment_transactionId_result_file.txt";
 
 // Get Config
 const config = JSON.parse(open("../config.json")).csa;
@@ -84,7 +84,7 @@ const shipmentRequest = {
 };
 
 export default function postShipmentRequest() {
-  file.clearFile(result_file_path);
+  // file.clearFile(result_file_path);
   group('Post shipment request', () => {
     const date = new Date().toLocaleDateString('en-CA', { dateStyle: 'sort'});
     let transactionId = `TranS_${date}_${randomString(29, 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ')}`;
@@ -109,13 +109,13 @@ export default function postShipmentRequest() {
     
     // Write transactionId for get shipment & refund for succesfull request
     if (post_shipment_request.status == 200) {
-      file.appendString(result_file_path, `${transactionId}`);
+      // file.appendString(result_file_path, `${transactionId}`);
     }
 
     // Logs to help get information of failed requests on live executed load tests
     if (post_shipment_request.status != 200) {
-      file.appendString(failed_data_file_path, `'${transactionId}','${post_shipment_request.status}','${post_shipment_request.body}'\n`);
-      file.appendString(failed_data_file_path, `curl -X POST "${url}" -H "accept: application/json, text/plain, */*" -H "content-type: application/json" -H "Authorization: ApiKey ${config.token}" -H "TransactionId: ${transactionId}" -d "${shipmentRequest}"\n`);
+      // file.appendString(failed_data_file_path, `'${transactionId}','${post_shipment_request.status}','${post_shipment_request.body}'\n`);
+      // file.appendString(failed_data_file_path, `curl -X POST "${url}" -H "accept: application/json, text/plain, */*" -H "content-type: application/json" -H "Authorization: ApiKey ${config.token}" -H "TransactionId: ${transactionId}" -d "${shipmentRequest}"\n`);
 
       // To console the response
       // console.log(post_shipment_request.status);
