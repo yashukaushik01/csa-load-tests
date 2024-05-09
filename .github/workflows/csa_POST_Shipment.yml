@@ -24,24 +24,24 @@ on:
         type: string
         required: true
       vUs:
-          description: 'The number of preallocated VUS (required field for execution type iterations)'
-          default: '1'
-          type: string
-          required: true
+        description: 'The number of preallocated VUS (required field for execution type iterations)'
+        default: '1'
+        type: string
+        required: true
       apiAuthKey:
         description: 'The CSA API Token to use'
         type: string
         required: true
       carrierAccountId:
-          description: 'The number of requests (iterations) to be executed (required field for execution type iterations)'
-          default: ""
-          type: string
-          required: false
+        description: 'The number of requests (iterations) to be executed (required field for execution type iterations)'
+        default: ""
+        type: string
+        required: false
       locationId:
-          description: 'The CSA location id of pickup location'
-          default: ""
-          type: string
-          required: false
+        description: 'The CSA location id of pickup location'
+        default: ""
+        type: string
+        required: false
         
 jobs:
   k6_forward_label:
