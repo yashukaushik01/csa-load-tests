@@ -61,7 +61,7 @@ jobs:
               echo "{
                 \"scenarios\": {
                   \"example_scenario\": {
-                    \"executor\": \"constant-arrival-rate\",
+                    \"executor\": \"shared-iterations\",
                     \"rate\": ${{ inputs.iterations }},
                     \"timeUnit\": \"${{ inputs.durationSeconds }}\",
                     \"duration\": \"${{ inputs.durationSeconds }}\",

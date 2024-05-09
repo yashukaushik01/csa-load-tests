@@ -68,16 +68,20 @@ const shipmentRequest = {
   },
   items: [
     {
-      Name: "Doll",
-      hSNCode: "100.30",
+      productId: "123",
+      productName: "Doll",
+      Name: "Doll-Bargie-Angel",
+      hSNCode: "1230818",
       sku: "1234",
-      value: 12
-    },
-    {
-      Name: "Product2",
-      hSNCode: "10",
-      sku: "12345",
-      value: 24
+      value: 12,
+      quantity: 2,
+      weight: 200,
+      weightUnit: "g",
+      // save: true,
+      description: "",
+      packageNumber: 1,
+      category: "other",
+      originCountry: "IN"
     }
   ],
   isTest: config.shipmentMode === "Test"
@@ -86,7 +90,7 @@ const shipmentRequest = {
 export default function postShipmentRequest() {
   // file.clearFile(result_file_path);
   group('Post shipment request', () => {
-    const date = new Date().toLocaleDateString('en-CA', { dateStyle: 'sort'});
+    const date = new Date().toLocaleDateString('en-CA', { dateStyle: 'sort' });
     let transactionId = `TranS_${date}_${randomString(29, 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ')}`;
     const url = `${config.baseURL}shipment`;
     console.log(transactionId);
@@ -106,7 +110,11 @@ export default function postShipmentRequest() {
     check(post_shipment_request, {
       'is status 200': (response) => response.status === 200
     });
-    
+
+    let shipmentResponse = JSON.parse(post_shipment_request.body);
+
+    console.log(shipmentResponse);
+
     // Write transactionId for get shipment & refund for succesfull request
     if (post_shipment_request.status == 200) {
       // file.appendString(result_file_path, `${transactionId}`);

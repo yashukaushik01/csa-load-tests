@@ -1,7 +1,7 @@
 {
     "scenarios": {
       "example_scenario": {
-        "executor": "constant-arrival-rate",
+        "executor": "shared-iterations",
         "rate": 1,
         "gracefulStop": "30s",
         "timeUnit": "1s",
