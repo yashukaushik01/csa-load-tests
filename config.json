@@ -10,11 +10,6 @@
         "maxVUs": 1500
       }
     },
-    "phv3": {
-      "baseURL": "https://packagehub-api-qa.visiblescm.com/v3.1/",
-      "token": "",
-      "carrierAccountId": ""
-    },
     "csa": {
       "baseURL": "https://api-qa.kloudship.com:96/api/v1/",
       "token": "",
