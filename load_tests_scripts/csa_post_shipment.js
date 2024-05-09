@@ -5,44 +5,47 @@ import { Counter } from "k6/metrics";
 import file from 'k6/x/file';
 
 // Result Counters
-const failed_data_file_path = 'failed_phv3_shipment_results.txt';
+const failed_data_file_path = 'failed_csa_shipment_results.txt';
 const successStatus200Counter = new Counter('success_Status_code_200');
 const errorStatus400Counter = new Counter('errors_Status_code_400');
 const errorStatus422Counter = new Counter('errors_Status_code_422');
 const errorStatus500Counter = new Counter('errors_Status_code_500');
 
 // Result File
-const result_file_path = "../phv3_post_shipment_transactionId_result_file.txt";
+const result_file_path = "../csa_post_shipment_transactionId_result_file.txt";
 
 // Get Config
 const config = JSON.parse(open("../config.json")).phv3;
 
 // Prepare request data 
 const shipmentRequest = {
-  toAddress: {
+  addressShipTo: {
     name: "Mr. Forward",
-    company: "Forward",
-    street1: "186 CANNONGATE III RD",
+    company: "Impledge Technologies",
+    street1: "F 92 Sector 26",
     street2: "",
-    city: "NASHUA",
-    state: "NH",
-    zip: "03063",
-    country: "US",
-    phone: "5708208072",
-    email: "demo1-dev@maersk.com",
+    city: "Noida",
+    stateCode: "UP",
+    zip: "201301",
+    countryCode: "IN",
+    phone: "9876543210",
+    email: "demo-qa-admin@impledge.com",
     verify: false,
+    // Lat/lng of sector-62 metro station (For hyper-local carriers)
+    latitude: 28.617865356742037,
+    longitude: 77.37299541473388
   },
   fromAddress: {
-    name: "Mr. NASHUA",
-    company: "NASHUAUS",
-    street1: "186 CANNONGATE III RD",
+    name: "Mr. Shipper",
+    company: "Impledge Technologies",
+    street1: "Regus, 5th Floor, Tower C, Green Boulevard, B-Block, Sector 62",
     street2: "",
-    city: "NASHUA",
-    state: "NH",
-    zip: "03063",
-    country: "US",
-    phone: "5708208072",
-    email: "demo1-dev@maersk.com",
+    city: "Noida",
+    stateCode: "UP",
+    zip: "201309",
+    countryCode: "IN",
+    phone: "9876543210",
+    email: "demo-qa-admin@impledge.com",
     verify: false,
   },
   packages: [
@@ -51,15 +54,33 @@ const shipmentRequest = {
       length: 2,
       width: 1,
       height: 1,
-      weight: 7,
+      dimensionUnit: "cm",
+      weight: 0.5,
+      weightUnit: "kg"
     },
   ],
-  service: "PriorityMail",
+  service: "Surface",
   carrierAccountId: config.carrierAccountId,
-  postageLabel: {
-    labelFileType: "PDF",
-    labelType: "URL",
+  label: {
+    labelFileType: "pdf",
+    labelSize: "4x6",
+    labelOrientation: "Portrait"
   },
+  items: [
+    {
+      Name: "Doll",
+      hSNCode: "100.30",
+      sku: "1234",
+      value: 12
+    },
+    {
+      Name: "Product2",
+      hSNCode: "10",
+      sku: "12345",
+      value: 24
+    }
+  ],
+  isTest: config.shipmentMode === "Test"
 };
 
 export default function postShipmentRequest() {

@@ -5,9 +5,8 @@ on:
         description: 'The base url of PHv3 API'
         type: choice
         options:
-        - "https://packagehub-api-qa.visiblescm.com/v3.1/"
-        - "https://visible-shipping-qa-api.azurewebsites.net/api/v3.1/"
-        - "https://visible-shipping-qa-api-statging.azurewebsites.net/api/v3.1/"
+        - "https://api-qa.kloudship.com:96/api/v1/"
+        - "https://api.kloudship.com:96/api/v1/"
       iterations:
         description: 'The number of requests (iterations) to be executed (required field for execution type iterations)'
         default: '1'
@@ -24,14 +23,27 @@ on:
           type: string
           required: true
       apiAuthKey:
-        description: 'The PHv3 API Token to use'
+        description: 'The CSA API Token to use'
         type: string
         required: true
       carrierAccountId:
           description: 'The number of requests (iterations) to be executed (required field for execution type iterations)'
-          default: "71087ab5-4995-4206-ba6c-33614a120473"
+          default: ""
           type: string
           required: false
+      locationId:
+          description: 'The CSA location id of pickup location'
+          default: ""
+          type: string
+          required: false
+      shipmentMode:
+          description: 'Mode of shipment'
+          default: 'Live'
+          type: string
+          required: true
+          options:
+          - "Test"
+          - "Live"
         
 jobs:
   k6_forward_label:
@@ -59,9 +71,11 @@ jobs:
                     \"maxVUs\": \"${{ inputs.vUs }}\"
                   }
                 },
-                \"phv3\": {
+                \"csa\": {
                   \"baseURL\": \"${{ inputs.baseURL }}\",
                   \"carrierAccountId\": \"${{ inputs.carrierAccountId }}\",
+                  \"locationId\": \"${{ inputs.locationId }}\",
+                  \"shipmentMode\": \"${{ inputs.shipmentMode }}\",
                   \"token\": \"${{ inputs.apiAuthKey }}\"
                 }
               }" >> config.json
