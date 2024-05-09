@@ -35,7 +35,7 @@ const shipmentRequest = {
     latitude: 28.617865356742037,
     longitude: 77.37299541473388
   },
-  fromAddress: {
+  addressFrom: {
     name: "Mr. Shipper",
     company: "Impledge Technologies",
     street1: "Regus, 5th Floor, Tower C, Green Boulevard, B-Block, Sector 62",
