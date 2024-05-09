@@ -2,7 +2,7 @@
     "scenarios": {
       "example_scenario": {
         "executor": "shared-iterations",
-        "rate": 1,
+        "iterations": 1,
         "gracefulStop": "30s",
         "timeUnit": "1s",
         "duration": "1s",

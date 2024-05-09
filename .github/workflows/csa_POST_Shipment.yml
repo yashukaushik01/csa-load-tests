@@ -62,7 +62,7 @@ jobs:
                 \"scenarios\": {
                   \"example_scenario\": {
                     \"executor\": \"shared-iterations\",
-                    \"rate\": ${{ inputs.iterations }},
+                    \"iterations\": ${{ inputs.iterations }},
                     \"timeUnit\": \"${{ inputs.durationSeconds }}\",
                     \"duration\": \"${{ inputs.durationSeconds }}\",
                     \"preAllocatedVUs\": \"${{ inputs.vUs }}\",
