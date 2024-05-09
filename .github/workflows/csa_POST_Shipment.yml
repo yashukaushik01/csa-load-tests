@@ -64,7 +64,7 @@ jobs:
                     \"executor\": \"shared-iterations\",
                     \"iterations\": ${{ inputs.iterations }},
                     \"maxDuration\": \"${{ inputs.durationSeconds }}\",
-                    \"vus\": \"${{ inputs.vUs }}\",
+                    \"vus\": \"${{ inputs.vUs }}\"
                   }
                 },
                 \"csa\": {

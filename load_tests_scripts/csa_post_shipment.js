@@ -15,7 +15,14 @@ const errorStatus500Counter = new Counter('errors_Status_code_500');
 // const result_file_path = "../csa_post_shipment_transactionId_result_file.txt";
 
 // Get Config
-const config = JSON.parse(open("./../config.json")).csa;
+// const config = JSON.parse(open("../config.json")).csa;
+const config = {
+  "baseURL": "https://api-qa.kloudship.com:96/api/v1/",
+  "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2NGNjOWFjNGQyMGQ0YjlmMmE2ZGRkMTgiLCJzaWQiOiI2NGNjOWFjNGQyMGQ0YjlmMmE2ZGRkMTciLCJTdWJBY2NvdW50SWQiOiI2NGNjOWFjNGQyMGQ0YjlmMmE2ZGRkMWIiLCJQcm9kdWN0SWQiOiI2NDYzODU5OWNjYTcxNWQwNjBhNjdhYjgiLCJBcGlDcmVkZW50aWFsSWQiOiIiLCJSb2xlIjoiMCIsIlRva2VuQWNjZXNzVHlwZSI6IjEiLCJJc1Rlc3QiOiJUcnVlIiwiUGF5bWVudFByb3ZpZGVyIjoiIiwiU3ViUGxhbiI6IjAiLCJhdWQiOlsiaHR0cHM6Ly9hcGktcWEua2xvdWRzaGlwLmNvbTo5MSIsImh0dHBzOi8vZWNzLXFhLmtsb3Vkc2hpcC5jb20iLCJodHRwczovL2FwaS1xYS5rbG91ZHNoaXAuY29tOjk2IiwiaHR0cHM6Ly9hcGktcWEua2xvdWRzaGlwLmNvbTo5NCIsImh0dHBzOi8vdG9vbHMtcWEua2xvdWRzaGlwLmNvbSJdLCJleHAiOjE3MTUzMjY1ODAsImlzcyI6Imh0dHBzOi8vYXV0aC1xYS5rbG91ZHNoaXAuY29tOjk3In0.YVMfEvajnnsL-u25dRgBTKDusD8HEFPKV-WgnWQgWeIkY8ujDcK_KrlD4wRfvrbnhRVpN2UBLiAJTaO7YYszztzb-Jyz2tCQLwGx4ERk1Z_hgzP672zSUDN9ihIYc9ItItMMqKXF2I2Y7W1Pd43x2hXT903rrfElL_6R8dP-S6YPffhDgw4X0fTus-KTtwGr_66QTWzM-gtt8jo8-1BibPHEP26ypxv21aAgg5zRjeWeyZMlqohk6PujNRzoWMaqBWG9ji1Iyf0-cisYWQPSBTgHLOqF7Qcl0-lQvBHE6qhZtge6zaQBaGD4IPp8OwxHojRGlCfDr2fSLBMjtBneew",
+  "carrierAccountId": "64c7b9911175bfb7baaeb5cc",
+  "locationId": "",
+  "shipmentMode": "Test"
+};
 
 // Prepare request data 
 const shipmentRequest = {
