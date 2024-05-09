@@ -1,0 +1,18 @@
+{
+    "scenarios": {
+      "example_scenario": {
+        "executor": "constant-arrival-rate",
+        "rate": 1,
+        "gracefulStop": "30s",
+        "timeUnit": "1s",
+        "duration": "1s",
+        "preAllocatedVUs": 1,
+        "maxVUs": 1500
+      }
+    },
+    "phv3": {
+      "baseURL": "https://packagehub-api-qa.visiblescm.com/v3.1/",
+      "token": "",
+      "carrierAccountId": ""
+    }
+}

@@ -1,0 +1,117 @@
+on: 
+  workflow_dispatch:
+    inputs:
+      env:
+        description: 'The environment to run within visible API'
+        type: choice
+        options:
+        # - sandbox1
+        - sandbox2
+        - prod
+      execution_type:
+        description: 'Define type of execution'
+        type: choice
+        options:
+          - iterations
+          - vus
+      #enableHttpDebug:
+      #  description: 'Enable HTTP debugging'
+      #  required: false
+      #  default: false
+      #  type: boolean
+      iterations:
+        description: 'The number of requests (iterations) to be executed (required field for execution type iterations)'
+        default: '1'
+        type: string
+        required: false
+      durationSeconds:
+        description: 'The duration of execution in seconds/minutes/hours (examples 1s/1m/1h)'
+        default: '1s'
+        type: string
+        required: true
+      threads:
+        description: 'The number of threads (VUS) to run with (concurrent executions) (required field for execution type vus, ignored when iterations is selected)'
+        default: '1'
+        type: string
+        required: false
+      preAllocatedVUs:
+        description: 'The number of preallocated VUS (required field for execution type iterations)'
+        default: '1'
+        type: string
+        required: true
+      maxVUs:
+        description: 'The maximum number of threads (VUS) to run with (concurrent executions, required field for execution type iterations)'
+        default: '120'
+        type: string
+        required: true
+      shipdate:
+        description: 'The ship date format: yyyy-MM-dd'
+        type: string
+        required: false
+      apiAuthKey:
+        description: 'The OCT-ECL Auth Key to use'
+        type: string
+        required: true
+      clientKey:
+        description: 'The OCT-ECL Client Key to use'
+        type: string
+        required: true
+
+jobs:
+  k6_forward_label:
+    name: K6 Return Label Test Runner
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.env }}
+    container: docker://golang:1.19-alpine
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Create .env file
+        run: |
+          touch .env
+          echo "ECL_OCT_API_BASE_URL=${{ vars.ECL_OCT_API_BASE_URL }}" >> .env
+          echo "SHIPDATE=${{ inputs.shipdate }}" >> .env
+          echo "ECL_OCT_API_AUTH_KEY=${{ inputs.apiAuthKey }}" >> .env
+          echo "ECL_OCT_CLIENT_KEY=${{ inputs.clientKey }}" >> .env
+
+      - name: Create config.json file for ${{inputs.execution_type}} execution type
+        run: |
+              rm config.json
+              touch config.json
+              if [ '${{ inputs.execution_type }}' == 'iterations' ]; then
+              echo "{
+                \"scenarios\": {
+                  \"example_scenario\": {
+                    \"executor\": \"constant-arrival-rate\",
+                    \"rate\": ${{ inputs.iterations }},
+                    \"timeUnit\": \"${{ inputs.durationSeconds }}\",
+                    \"duration\": \"${{ inputs.durationSeconds }}\",
+                    \"preAllocatedVUs\": \"${{ inputs.preAllocatedVUs }}\",
+                    \"maxVUs\": \"${{ inputs.maxVUs }}\"
+                  }
+                }
+              }" >> config.json
+              elif [ '${{ inputs.execution_type }}' == 'vus' ]; then
+              echo "{
+                \"vus\": ${{ inputs.threads }},
+                \"duration\": \"${{ inputs.durationSeconds }}\"
+              }" >> config.json
+              fi
+
+      - name: Install xk6
+        run: go install go.k6.io/xk6/cmd/xk6@latest
+      
+      - name: Build xk6 binary
+        run: xk6 build --with github.com/szkiba/xk6-dotenv@latest --with github.com/avitalique/xk6-file@latest --replace go.buf.build/grpc/go/prometheus/prometheus=buf.build/gen/go/prometheus/prometheus/protocolbuffers/go@latest --replace go.buf.build/grpc/go/gogo/protobuf=buf.build/gen/go/gogo/protobuf/protocolbuffers/go@latest
+
+      - name: Run k6 forward label test
+        run: ./k6 run --config config.json --env ENV=${{ inputs.env }} load_tests_scripts/us2_post_shipping_return_label.js
+      #- name: Run k6 forward label test
+      #  run: |
+      #    if [ "${{ inputs.enableHttpDebug }}" = "true" ]; then
+      #      ./k6 run --config config.json --env ENV=${{ inputs.env }} --http-debug="full" load_tests_scripts/us2_post_shipping_return_label.js
+      #    else
+      #      ./k6 run --config config.json --env ENV=${{ inputs.env }} load_tests_scripts/us2_post_shipping_return_label.js
+      #    fi
