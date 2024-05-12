@@ -94,7 +94,7 @@ export default function postShipmentRequest() {
     const date = new Date().toLocaleDateString('en-CA', { dateStyle: 'sort' });
     let transactionId = `TranS_${date}_${randomString(29, 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ')}`;
     const url = `${config.baseURL}shipment`;
-    console.log(transactionId);
+    // console.log(transactionId);
     let post_shipment_request = http.post(
       url,
       JSON.stringify(shipmentRequest),
