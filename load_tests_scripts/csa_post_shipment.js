@@ -1,4 +1,4 @@
-import { group, check } from "k6";
+import { group, check, sleep } from "k6";
 import http from "k6/http";
 import { randomString } from "https://jslib.k6.io/k6-utils/1.2.0/index.js";
 import { Counter } from "k6/metrics";
@@ -150,5 +150,6 @@ export default function postShipmentRequest() {
       default:
         break;
     }
+    sleep(1);
   });
 }
