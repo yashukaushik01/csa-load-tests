@@ -17,6 +17,7 @@ const errorStatus500Counter = new Counter('errors_Status_code_500');
 // Get Config
 const config = JSON.parse(open("../config.json")).csa;
 var output = "";
+var shipmentIds = [];
 
 // Prepare request data 
 const shipmentRequest = {
@@ -114,11 +115,12 @@ export default function postShipmentRequest() {
 
     let shipmentResponse = JSON.parse(post_shipment_request.body);
 
-    output = "{" + ' ShipmentId: ' + ((shipmentResponse === null || shipmentResponse === undefined) ? '' : shipmentResponse.id) + '"' + "} , ";
-    console.log(output);
-
     // Write transactionId for get shipment & refund for succesfull request
     if (post_shipment_request.status == 200) {
+      output = "{" + ' ShipmentId: ' + ((shipmentResponse === null || shipmentResponse === undefined) ? '' : shipmentResponse.id) + '"' + "} , ";
+      shipmentIds.push(shipmentResponse.id);
+      console.log(output);
+      console.log('Shipment Ids', shipmentIds);
       // file.appendString(result_file_path, `${transactionId}`);
     }
 
