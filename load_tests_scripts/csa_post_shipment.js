@@ -62,6 +62,7 @@ const shipmentRequest = {
   ],
   service: "Surface",
   carrierAccountId: config.carrierAccountId,
+  locationId: config.locationId,
   label: {
     labelFileType: "pdf",
     labelSize: "4x6",
