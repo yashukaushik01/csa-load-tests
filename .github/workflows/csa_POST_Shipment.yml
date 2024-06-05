@@ -48,7 +48,7 @@ jobs:
     name: K6 POST Shipment Test Runner
     runs-on: ubuntu-latest
     #environment: ${{ inputs.env }}
-    # container: docker://golang:1.19-alpine
+    container: docker://golang:1.19-alpine
 
     steps:
       - name: Checkout Repo
