@@ -86,12 +86,12 @@ jobs:
         run: ./k6 run --config config.json load_tests_scripts/csa_post_shipment.js
 
       - name: Commit files
-        uses: actions/checkout@v4
-        run: |
+      - uses: actions/checkout@v4
+      - run: |
           git config --local user.email "kaushiky655@gmail.com"
           git config --local user.name "Yash Kaushik"
           git commit -a -m "Add changes"
-
+          git push
 
       # - name: Commit files
       #   run: |
