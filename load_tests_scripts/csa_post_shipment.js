@@ -2,17 +2,18 @@ import { group, check, sleep } from "k6";
 import http from "k6/http";
 import { randomString } from "https://jslib.k6.io/k6-utils/1.2.0/index.js";
 import { Counter } from "k6/metrics";
-// import file from 'k6/x/file';
+import file from 'k6/x/file';
 
 // Result Counters
 // const failed_data_file_path = 'failed_csa_shipment_results.txt';
+const errorStatusCounter = new Counter('timeout_errors');
 const successStatus200Counter = new Counter('success_Status_code_200');
 const errorStatus400Counter = new Counter('errors_Status_code_400');
 const errorStatus422Counter = new Counter('errors_Status_code_422');
 const errorStatus500Counter = new Counter('errors_Status_code_500');
 
 // Result File
-// const result_file_path = "../csa_post_shipment_transactionId_result_file.txt";
+const result_file_path = "../csa_post_shipment_transactionId_result_file.txt";
 
 // Get Config
 const config = JSON.parse(open("../config.json")).csa;
@@ -117,9 +118,10 @@ export default function postShipmentRequest() {
 
     // Write transactionId for get shipment & refund for succesfull request
     if (post_shipment_request.status == 200) {
-      output = "{" + ' ShipmentId: ' + ((shipmentResponse === null || shipmentResponse === undefined) ? '' : shipmentResponse.id) + '"' + "} , ";
+      let shipmentId = (shipmentResponse === null || shipmentResponse === undefined) ? '' : shipmentResponse.id;
+      output = "{" + ' ShipmentId: ' + shipmentId + '"' + "} , ";
       console.log(output);
-      // file.appendString(result_file_path, `${transactionId}`);
+      file.appendString(result_file_path, `${shipmentId}`);
     }
 
     // Logs to help get information of failed requests on live executed load tests
