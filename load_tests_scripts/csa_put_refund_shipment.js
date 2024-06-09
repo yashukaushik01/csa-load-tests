@@ -17,7 +17,7 @@ const shipmentId_list = new SharedArray('shipmentId_list', () => {
   let shipmentId_list = [];
 
   // shipmentId_list = open("../phv3_post_shipment_transactionId_result_file.txt").split(/\n/);
-  shipmentId_list = config.csa.shipmentIds.split(',');
+  shipmentId_list = config.shipmentIds.split(',');
   shipmentId_list.splice(-1);
 
   return shipmentId_list;
