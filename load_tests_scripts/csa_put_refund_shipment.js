@@ -29,54 +29,54 @@ export default function putRefundShipmentRequest() {
     console.log("scenario.iterationInTest", scenario.iterationInTest);
     console.log("shipmentId_list.length", shipmentId_list.length);
 
-    let shipmentId = shipmentId_list[0];
+    // let shipmentId = shipmentId_list[0];
 
-    // Remove shipment id from array
-    shipmentId_list.splice(0, 1);
+    // // Remove shipment id from array
+    // shipmentId_list.splice(0, 1);
 
-    console.log("Shipment ids length", shipmentId_list.length);
+    // console.log("Shipment ids length", shipmentId_list.length);
 
-    const date = new Date().toLocaleDateString('en-CA', { dateStyle: 'sort' });
-    let transactionId = `TranS_${date}_${randomString(29, 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ')}`;
+    // const date = new Date().toLocaleDateString('en-CA', { dateStyle: 'sort' });
+    // let transactionId = `TranS_${date}_${randomString(29, 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ')}`;
 
-    const url = `${config.baseURL}/shipment/${shipmentId}/refund`;
-    // console.log(transactionId);
-    let put_refund_shipment_request = http.put(
-      url,
-      JSON.stringify(shipmentRefundRequest),
-      {
-        headers: {
-          accept: "application/json, text/plain, */*",
-          "content-type": "application/json",
-          TransactionId: transactionId,
-          "Authorization": `Bearer ${config.token}`,
-        }
-      }
-    );
+    // const url = `${config.baseURL}/shipment/${shipmentId}/refund`;
+    // // console.log(transactionId);
+    // let put_refund_shipment_request = http.put(
+    //   url,
+    //   JSON.stringify(shipmentRefundRequest),
+    //   {
+    //     headers: {
+    //       accept: "application/json, text/plain, */*",
+    //       "content-type": "application/json",
+    //       TransactionId: transactionId,
+    //       "Authorization": `Bearer ${config.token}`,
+    //     }
+    //   }
+    // );
 
-    check(put_refund_shipment_request, {
-      'is status 200': (response) => response.status === 200
-    });
+    // check(put_refund_shipment_request, {
+    //   'is status 200': (response) => response.status === 200
+    // });
 
-    let shipmentResponse = JSON.parse(put_refund_shipment_request.body);
+    // let shipmentResponse = JSON.parse(put_refund_shipment_request.body);
 
-    // Write transactionId for get shipment & refund for succesfull request
-    if (put_refund_shipment_request.status == 200) {
-      output = "{" + ' ShipmentId: ' + ((shipmentResponse === null || shipmentResponse === undefined) ? '' : shipmentResponse.id) + '"' + "} , ";
-      console.log(output);
-      // file.appendString(result_file_path, `${transactionId}`);
-    }
+    // // Write transactionId for get shipment & refund for succesfull request
+    // if (put_refund_shipment_request.status == 200) {
+    //   output = "{" + ' ShipmentId: ' + ((shipmentResponse === null || shipmentResponse === undefined) ? '' : shipmentResponse.id) + '"' + "} , ";
+    //   console.log(output);
+    //   // file.appendString(result_file_path, `${transactionId}`);
+    // }
 
-    // Logs to help get information of failed requests on live executed load tests
-    if (put_refund_shipment_request.status != 200) {
-      // file.appendString(failed_data_file_path, `'${transactionId}','${post_shipment_request.status}','${post_shipment_request.body}'\n`);
-      // file.appendString(failed_data_file_path, `curl -X POST "${url}" -H "accept: application/json, text/plain, */*" -H "content-type: application/json" -H "Authorization: ApiKey ${config.token}" -H "TransactionId: ${transactionId}" -d "${shipmentRequest}"\n`);
+    // // Logs to help get information of failed requests on live executed load tests
+    // if (put_refund_shipment_request.status != 200) {
+    //   // file.appendString(failed_data_file_path, `'${transactionId}','${post_shipment_request.status}','${post_shipment_request.body}'\n`);
+    //   // file.appendString(failed_data_file_path, `curl -X POST "${url}" -H "accept: application/json, text/plain, */*" -H "content-type: application/json" -H "Authorization: ApiKey ${config.token}" -H "TransactionId: ${transactionId}" -d "${shipmentRequest}"\n`);
 
-      // To console the response
-      // console.log(post_shipment_request.status);
-      // console.error(post_shipment_request.headers);
-      // console.error(post_shipment_request.body);
-    }
+    //   // To console the response
+    //   // console.log(post_shipment_request.status);
+    //   // console.error(post_shipment_request.headers);
+    //   // console.error(post_shipment_request.body);
+    // }
     sleep(1);
   });
 }
