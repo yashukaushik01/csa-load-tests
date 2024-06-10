@@ -16,6 +16,7 @@ const shipmentRefundRequest = {
 const shipmentId_list = new SharedArray('shipmentId_list', () => {
   let shipmentId_list = [];
 
+  console.log('shipment ids', config.shipmentIds)
   // shipmentId_list = open("../phv3_post_shipment_transactionId_result_file.txt").split(/\n/);
   shipmentId_list = config.shipmentIds.split(',');
 
