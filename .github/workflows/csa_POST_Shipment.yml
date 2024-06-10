@@ -85,12 +85,12 @@ jobs:
       - name: Run k6 forward label test
         run: ./k6 run --config config.json load_tests_scripts/csa_post_shipment.js
 
-      - uses: actions/checkout@v4
-      - run: |
-          git config --local user.email "kaushiky655@gmail.com"
-          git config --local user.name "Yash Kaushik"
-          git commit -a -m "Add changes"
-          git push
+      # - uses: actions/checkout@v4
+      # - run: |
+      #     git config --local user.email "kaushiky655@gmail.com"
+      #     git config --local user.name "Yash Kaushik"
+      #     git commit -a -m "Add changes"
+      #     git push
 
       # - name: Commit files
       #   run: |
