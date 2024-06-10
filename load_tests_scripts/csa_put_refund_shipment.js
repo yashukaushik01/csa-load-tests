@@ -53,12 +53,14 @@ export default function putRefundShipmentRequest() {
       'is status 200': (response) => response.status === 200
     });
 
-    let shipmentResponse = JSON.parse(put_refund_shipment_request.body);
+    console.log(put_refund_shipment_request.body)
+
+    // let shipmentResponse = JSON.parse(put_refund_shipment_request.body);
 
     // Write transactionId for get shipment & refund for succesfull request
     if (put_refund_shipment_request.status == 200) {
-      output = "{" + ' ShipmentId: ' + ((shipmentResponse === null || shipmentResponse === undefined) ? '' : shipmentResponse.id) + '"' + "} , ";
-      console.log(output);
+      // output = "{" + ' ShipmentId: ' + ((shipmentResponse === null || shipmentResponse === undefined) ? '' : shipmentResponse.id) + '"' + "} , ";
+      // console.log(output);
       // file.appendString(result_file_path, `${transactionId}`);
     }
 
