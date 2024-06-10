@@ -33,8 +33,8 @@ export default function putRefundShipmentRequest() {
     const date = new Date().toLocaleDateString('en-CA', { dateStyle: 'sort' });
     let transactionId = `TranS_${date}_${randomString(29, 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ')}`;
 
-    const url = `${config.baseURL}/shipment/${shipmentId}/refund`;
-    console.log('transactionId', transactionId);
+    const url = `${config.baseURL}shipment/${shipmentId}/refund`;
+    // console.log('transactionId', transactionId);
     let put_refund_shipment_request = http.put(
       url,
       JSON.stringify(shipmentRefundRequest),
@@ -48,18 +48,18 @@ export default function putRefundShipmentRequest() {
       }
     );
 
-    console.log(put_refund_shipment_request)
+    // console.log(put_refund_shipment_request)
 
     check(put_refund_shipment_request, {
       'is status 200': (response) => response.status === 200
     });
 
-    // let shipmentResponse = JSON.parse(put_refund_shipment_request.body);
+    let shipmentResponse = JSON.parse(put_refund_shipment_request.body);
 
     // Write transactionId for get shipment & refund for succesfull request
     if (put_refund_shipment_request.status == 200) {
-      // output = "{" + ' ShipmentId: ' + ((shipmentResponse === null || shipmentResponse === undefined) ? '' : shipmentResponse.id) + '"' + "} , ";
-      // console.log(output);
+      output = "{" + ' ShipmentId: ' + ((shipmentResponse === null || shipmentResponse === undefined) ? '' : shipmentResponse.id) + '"' + "} , ";
+      console.log(output);
       // file.appendString(result_file_path, `${transactionId}`);
     }
 
