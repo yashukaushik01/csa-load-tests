@@ -80,7 +80,7 @@ export default function putRefundShipmentRequest() {
       // console.error(post_shipment_request.body);
     }
 
-    switch (post_shipment_request.status) {
+    switch (put_refund_shipment_request.status) {
       case 0:
         errorStatusCounter.add(1);
         break;

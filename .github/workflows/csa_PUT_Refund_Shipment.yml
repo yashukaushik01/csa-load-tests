@@ -34,7 +34,7 @@ on:
         
 jobs:
   k6_forward_label:
-    name: K6 POST Shipment Test Runner
+    name: K6 PUT Shipment Refund Test Runner
     runs-on: ubuntu-latest
     #environment: ${{ inputs.env }}
     container: docker://golang:1.19-alpine
