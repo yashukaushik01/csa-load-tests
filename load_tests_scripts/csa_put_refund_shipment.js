@@ -6,6 +6,12 @@ import { SharedArray } from 'k6/data';
 import file from 'k6/x/file';
 import { Counter } from 'k6/metrics';
 
+const errorStatusCounter = new Counter('timeout_errors');
+const successStatus200Counter = new Counter('success_Status_code_200');
+const errorStatus400Counter = new Counter('errors_Status_code_400');
+const errorStatus422Counter = new Counter('errors_Status_code_422');
+const errorStatus500Counter = new Counter('errors_Status_code_500');
+
 // Get Config
 const config = JSON.parse(open("../config.json")).csa;
 var output = "";
@@ -25,9 +31,6 @@ const shipmentId_list = new SharedArray('shipmentId_list', () => {
 export default function putRefundShipmentRequest() {
   // file.clearFile(result_file_path);
   group('Put refund shipment request', () => {
-    console.log("scenario.iterationInTest", scenario.iterationInTest);
-    console.log("shipmentId_list.length", shipmentId_list.length);
-
     let shipmentId = shipmentId_list[scenario.iterationInTest];
 
     const date = new Date().toLocaleDateString('en-CA', { dateStyle: 'sort' });
@@ -58,13 +61,16 @@ export default function putRefundShipmentRequest() {
 
     // Write transactionId for get shipment & refund for succesfull request
     if (put_refund_shipment_request.status == 200) {
-      output = "{" + ' ShipmentId: ' + ((shipmentResponse === null || shipmentResponse === undefined) ? '' : shipmentResponse.id) + '"' + "} , ";
-      console.log(output);
+      // output = "{" + ' ShipmentId: ' + ((shipmentResponse === null || shipmentResponse === undefined) ? '' : shipmentResponse.id) + '"' + "} , ";
+      // console.log(output);
       // file.appendString(result_file_path, `${transactionId}`);
     }
 
     // Logs to help get information of failed requests on live executed load tests
     if (put_refund_shipment_request.status != 200) {
+      output = "{" + ' ShipmentId: ' + ((shipmentResponse === null || shipmentResponse === undefined) ? '' : shipmentResponse.id) + '"' + "} , ";
+      console.log(output);
+
       // file.appendString(failed_data_file_path, `'${transactionId}','${post_shipment_request.status}','${post_shipment_request.body}'\n`);
       // file.appendString(failed_data_file_path, `curl -X POST "${url}" -H "accept: application/json, text/plain, */*" -H "content-type: application/json" -H "Authorization: ApiKey ${config.token}" -H "TransactionId: ${transactionId}" -d "${shipmentRequest}"\n`);
 
@@ -72,6 +78,26 @@ export default function putRefundShipmentRequest() {
       // console.log(post_shipment_request.status);
       // console.error(post_shipment_request.headers);
       // console.error(post_shipment_request.body);
+    }
+
+    switch (post_shipment_request.status) {
+      case 0:
+        errorStatusCounter.add(1);
+        break;
+      case 200:
+        successStatus200Counter.add(1);
+        break;
+      case 400:
+        errorStatus400Counter.add(1);
+        break;
+      case 422:
+        errorStatus422Counter.add(1);
+        break;
+      case 500:
+        errorStatus500Counter.add(1);
+        break;
+      default:
+        break;
     }
     sleep(1);
   });
