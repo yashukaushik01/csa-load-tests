@@ -22,16 +22,16 @@ var output = "";
 // Prepare request data 
 const shipmentRequest = {
   addressShipTo: {
-    name: "Mr. Forward",
+    name: "Vipin Sharma",
     company: "Impledge Technologies",
-    street1: "F 92 Sector 26",
+    street1: "B-78, Man Sarovar Park, Shahdara",
     street2: "",
-    city: "Noida",
-    stateCode: "UP",
-    zip: "201301",
+    city: "Delhi",
+    stateCode: "DL",
+    zip: "110032",
     countryCode: "IN",
-    phone: "9876543210",
-    email: "demo-qa-admin@impledge.com",
+    phone: "9560960170",
+    email: "vipin.sharma@impledge.com",
     verify: false,
     // Lat/lng of sector-62 metro station (For hyper-local carriers)
     latitude: 28.617865356742037,
@@ -63,7 +63,7 @@ const shipmentRequest = {
   ],
   service: "Surface",
   carrierAccountId: config.carrierAccountId,
-  // locationId: config.locationId,
+  locationId: config.locationId,
   label: {
     labelFileType: "pdf",
     labelSize: "4x6",
