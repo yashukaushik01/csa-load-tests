@@ -69,5 +69,5 @@ jobs:
       - name: Build xk6 binary
         run: xk6 build --with github.com/szkiba/xk6-dotenv@latest --with github.com/avitalique/xk6-file@latest --replace go.buf.build/grpc/go/prometheus/prometheus=buf.build/gen/go/prometheus/prometheus/protocolbuffers/go@latest --replace go.buf.build/grpc/go/gogo/protobuf=buf.build/gen/go/gogo/protobuf/protocolbuffers/go@latest
 
-      - name: Run k6 forward label test
+      - name: Run k6 refund shipment test
         run: ./k6 run --config config.json load_tests_scripts/csa_put_refund_shipment.js
